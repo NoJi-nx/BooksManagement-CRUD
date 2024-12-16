@@ -8,7 +8,7 @@ import { HeaderComponent } from './header/header.component';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, RouterModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: []
 })
 export class AppComponent {
   title = 'client';

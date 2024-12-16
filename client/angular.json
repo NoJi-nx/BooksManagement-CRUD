@@ -32,10 +32,11 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
+              "src/app/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css"
             ],
+            
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -98,7 +99,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/styles.scss"
             ],
             "scripts": []
           }
