@@ -1,1 +1,22 @@
-<p>add-book works!</p>
+<div class="container mt-4">
+    <h2>Add a New Book</h2>
+
+    <form #bookForm="ngForm" (ngSubmit)="onSubmit(bookForm)">
+
+<div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" id="title" name="title" class="form-control" ngModel required />
+</div>
+
+<div class="mb-3">
+    <label for="author" class="form-label">Author</label>
+    <input type="text" id="author" name="author" class="form-control" ngModel required />
+</div>
+
+<div class="mb-3">
+    <label for="publicationDate" class="form-label">Publication Date</label>
+    <input type="date" id="publicationDate" name="publicationDate" class="form-control" ngModel required />
+  </div>
+  <button type="submit" class="btn btn-success">Add Book</button>
+</form>
+</div>
