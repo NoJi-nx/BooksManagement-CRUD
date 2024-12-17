@@ -7,7 +7,8 @@ bootstrapApplication(AppComponent,{
   providers: [
     provideRouter([
       { path: 'books', loadComponent: () => import('./app/books-list/books-list.component').then(m => m.BooksListComponent) },
-      { path: 'add-book', loadComponent: () => import('./app/add-book/add-book.component').then(m => m.AddBookComponent) }, // Move this before wildcard
+      { path: 'add-book', loadComponent: () => import('./app/add-book/add-book.component').then(m => m.AddBookComponent) },
+      { path: 'edit-book/:id', loadComponent: () => import('./app/edit-book/edit-book.component').then(m => m.EditBookComponent) },
       { path: 'quotes', loadComponent: () => import('./app/my-quotes/my-quotes.component').then(m => m.MyQuotesComponent) },
       { path: '', redirectTo: '/books', pathMatch: 'full' },
       { path: '**', redirectTo: '/books' }

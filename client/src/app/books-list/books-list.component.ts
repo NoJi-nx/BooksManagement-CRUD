@@ -28,7 +28,11 @@ export class BooksListComponent implements OnInit {
     console.log('Edit book with ID:', id);
   }
 
-  deleteBook(id: number) {
+  deleteBook(id: number): void {
+    if (confirm('Are you sure you want to delete this book?')) {
+      this.bookService.deleteBook(id);
+      this.books = this.bookService.getBooks();
+    }
     console.log('Delete book with ID:', id);
   }
 }

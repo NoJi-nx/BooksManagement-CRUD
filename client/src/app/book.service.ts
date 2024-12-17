@@ -28,4 +28,22 @@ export class BookService {
   private saveBooksToLocalStorage(): void {
     localStorage.setItem('books', JSON.stringify(this.books))
   }
+
+  getBookById(id: number): Book | undefined {
+    return this.books.find(book => book.id === id);
+  }
+
+  updateBook(updateBook: Book): void {
+    const index = this.books.findIndex(book => book.id === updateBook.id);
+
+    if (index !== -1) {
+      this.books[index] = updateBook;
+      this.saveBooksToLocalStorage();
+    }
+  }
+
+  deleteBook(id: number): void {
+    this.books = this.books.filter(book => book.id !== id);
+    this.saveBooksToLocalStorage();
+  }
 }

@@ -20,7 +20,7 @@
             <td>{{book.author}}</td>
             <td>{{book.publicationDate | date: 'shortDate'}}</td>
             <td>
-                <button class="btn btn-warning btn-sm me-2" (click)="editBook(book.id)">Edit</button>
+                <button class="btn btn-warning btn-sm me-2" [routerLink]="['/edit-book', book.id]">Edit</button>
                 <button class="btn btn-danger btn-sm" (click)="deleteBook(book.id)">Delete</button>
             </td>
         </tr>
