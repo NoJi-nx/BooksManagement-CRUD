@@ -3,25 +3,33 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BookService } from '../book.service';
 import { Book } from '../book.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-books-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './books-list.component.html',
   styleUrls: []
 })
 export class BooksListComponent implements OnInit {
-  books: Book[] = []; // Explicitly define the type as Book[]
+  books: Book[] = []; 
+  filteredBooks: Book[] = [];
+  searchTerm: string = '';
 
   constructor(private bookService: BookService) {}
 
   ngOnInit() {
     this.books = this.bookService.getBooks();
+    this.filteredBooks = [...this.books];
   }
 
-  onAddBookClick() {
-    console.log('Navigating to Add Book page...');
+  filterBooks(): void {
+    const lowerCaseTerm = this.searchTerm.toLowerCase();
+    this.filteredBooks = this.books.filter(book =>
+      book.title.toLowerCase().includes(lowerCaseTerm) || 
+      book.author.toLowerCase().includes(lowerCaseTerm)
+      );
   }
 
   editBook(id: number) {

@@ -1,5 +1,16 @@
 <div class="booklist-container container mt-4">
     <h2 class="mb-4">Books List</h2>
+    
+
+    <div class="mb-3">
+        <input 
+        type="text"
+        class="form-control"
+        placeholder="Search by title or author" 
+        [(ngModel)]="searchTerm"
+        (input)="filterBooks()" 
+        />
+    </div>
 
 <div class="mb-3 text-end">
     <button class="btn btn-primary" routerLink="/add-book">Add New Book</button>
@@ -15,7 +26,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let book of books">
+        <tr *ngFor="let book of filteredBooks">
             <td>{{book.title}}</td>
             <td>{{book.author}}</td>
             <td>{{book.publicationDate | date: 'shortDate'}}</td>
