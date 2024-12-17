@@ -20,6 +20,10 @@ export class BooksListComponent implements OnInit {
     this.books = this.bookService.getBooks();
   }
 
+  onAddBookClick() {
+    console.log('Navigating to Add Book page...');
+  }
+
   editBook(id: number) {
     console.log('Edit book with ID:', id);
   }
