@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: []
 })
 export class BooksListComponent implements OnInit {
-  books: Book[] = []; 
+  books: Book[] = [];
   filteredBooks: Book[] = [];
   searchTerm: string = '';
 
@@ -27,7 +27,7 @@ export class BooksListComponent implements OnInit {
   filterBooks(): void {
     const lowerCaseTerm = this.searchTerm.toLowerCase();
     this.filteredBooks = this.books.filter(book =>
-      book.title.toLowerCase().includes(lowerCaseTerm) || 
+      book.title.toLowerCase().includes(lowerCaseTerm) ||
       book.author.toLowerCase().includes(lowerCaseTerm)
       );
   }
@@ -43,4 +43,32 @@ export class BooksListComponent implements OnInit {
     }
     console.log('Delete book with ID:', id);
   }
+
+  sortColumn: string = '';
+sortOrder: string = 'asc';
+
+sortBooks(column: string): void{
+  if (this.sortColumn === column) {
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+  } else {
+    this.sortColumn = column;
+    this.sortOrder = 'asc';
+  }
+
+ 
+  this.filteredBooks.sort((a: Book, b: Book) => {
+    const valueA = a[column as keyof Book];
+    const valueB = b[column as keyof Book];
+
+
+    if (typeof valueA === 'string' && typeof valueB === 'string') {
+      return this.sortOrder === 'asc'
+        ? valueA.localeCompare(valueB)
+        : valueB.localeCompare(valueA);
+    }
+
+
+    return this.sortOrder === 'asc' ? +valueA - +valueB : +valueB - +valueA;
+  });
+}
 }

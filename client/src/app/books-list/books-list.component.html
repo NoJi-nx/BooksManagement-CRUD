@@ -1,14 +1,14 @@
 <div class="booklist-container container mt-4">
     <h2 class="mb-4">Books List</h2>
-    
+
 
     <div class="mb-3">
-        <input 
+        <input
         type="text"
         class="form-control"
-        placeholder="Search by title or author" 
+        placeholder="Search by title or author"
         [(ngModel)]="searchTerm"
-        (input)="filterBooks()" 
+        (input)="filterBooks()"
         />
     </div>
 
@@ -19,9 +19,26 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Publication Date</th>
+
+          <th (click)="sortBooks('title')">
+            Title
+            <span *ngIf="sortColumn === 'title'">
+            {{ sortOrder === 'asc' ? '▲' : '▼'}}
+            </span>
+          </th>
+          <th (click)="sortBooks('author')">
+            Author
+            <span *ngIf="sortColumn === 'author'">
+            {{ sortOrder === 'asc' ? '▲' : '▼'}}
+            </span>
+          </th>
+            <th (click)="sortBooks('publicationDate')">
+              Publication Date
+              <span *ngIf="sortColumn === 'publicationDate'">
+                {{ sortOrder === 'asc' ? '▲' : '▼' }}
+              </span>
+
+            </th>
             <th>Actions</th>
         </tr>
     </thead>
