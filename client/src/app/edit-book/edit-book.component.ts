@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../book.service';
 import { Book } from '../book.model';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-edit-book',
@@ -18,23 +19,25 @@ export class EditBookComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private bookService: BookService
+    private bookService: BookService,
+    private toastr: ToastrService
   )   {}
 
   ngOnInit(): void {
       const bookId = Number(this.route.snapshot.paramMap.get('id'));
       const foundBook = this.bookService.getBookById(bookId);
       if (foundBook) {
-        this.book = {...foundBook}; 
+        this.book = {...foundBook};
       } else {
         this.router.navigate(['/books']);
       }
   }
 
   onSubmit(form: any): void{
-    this.bookService.updateBook(this.book);
-    console.log('Book updated:', this.book);
-    this.router.navigate(['/books']);
+    const updatedBook = { id: this.book.id, ...form.value };
+  this.bookService.updateBook(updatedBook);
+  this.toastr.success('Book updated successfully!', 'Success'); 
+  this.router.navigate(['/books']);
   }
 }
 

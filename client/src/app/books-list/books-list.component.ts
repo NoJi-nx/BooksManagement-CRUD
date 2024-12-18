@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { BookService } from '../book.service';
 import { Book } from '../book.model';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-books-list',
@@ -17,7 +18,10 @@ export class BooksListComponent implements OnInit {
   filteredBooks: Book[] = [];
   searchTerm: string = '';
 
-  constructor(private bookService: BookService) {}
+  constructor(
+    private bookService: BookService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.books = this.bookService.getBooks();
@@ -36,9 +40,16 @@ export class BooksListComponent implements OnInit {
     console.log('Edit book with ID:', id);
   }
 
+  editBookSuccess(): void {
+    this.books = this.bookService.getBooks();
+    this.filteredBooks = [...this.books];
+    this.toastr.success('Book updated successfully!', 'Success'); 
+  }
+
   deleteBook(id: number): void {
     if (confirm('Are you sure you want to delete this book?')) {
       this.bookService.deleteBook(id);
+      this.toastr.success('Book deleted successfully!', 'Success');
       this.books = this.bookService.getBooks();
     }
     console.log('Delete book with ID:', id);
@@ -55,7 +66,7 @@ sortBooks(column: string): void{
     this.sortOrder = 'asc';
   }
 
- 
+
   this.filteredBooks.sort((a: Book, b: Book) => {
     const valueA = a[column as keyof Book];
     const valueB = b[column as keyof Book];
