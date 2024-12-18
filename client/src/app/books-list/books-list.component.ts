@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BookService } from '../book.service';
@@ -17,15 +17,36 @@ export class BooksListComponent implements OnInit {
   books: Book[] = [];
   filteredBooks: Book[] = [];
   searchTerm: string = '';
+  isDarkMode: boolean = false;
 
   constructor(
     private bookService: BookService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private renderer: Renderer2
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.books = this.bookService.getBooks();
     this.filteredBooks = [...this.books];
+
+    const theme = localStorage.getItem('theme');
+    this.isDarkMode = theme === 'dark';
+    this.applyTheme();
+  }
+  private applyTheme(): void {
+    if (this.isDarkMode) {
+      this.renderer.addClass(document.body, 'dark-theme');
+      this.renderer.removeClass(document.body, 'light-theme');
+    } else {
+      this.renderer.addClass(document.body, 'light-theme');
+      this.renderer.removeClass(document.body, 'dark-theme');
+    }
+  }
+  
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light'); // Save theme
+    this.applyTheme();
   }
 
   filterBooks(): void {
@@ -43,7 +64,7 @@ export class BooksListComponent implements OnInit {
   editBookSuccess(): void {
     this.books = this.bookService.getBooks();
     this.filteredBooks = [...this.books];
-    this.toastr.success('Book updated successfully!', 'Success'); 
+    this.toastr.success('Book updated successfully!', 'Success');
   }
 
   deleteBook(id: number): void {

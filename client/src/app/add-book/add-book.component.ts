@@ -16,21 +16,33 @@ import { Book } from '../book.model';
   styleUrls: []
 })
 export class AddBookComponent {
+  book = {
+    title: '',
+    author: '',
+    publicationDate: ''
+  };
+  maxDate: string = '';
+
   constructor(
     private router: Router,
     private bookService: BookService,
   private toastr: ToastrService
-) {}
+) {
+  const today = new Date();
+    this.maxDate = today.toISOString().split('T')[0];
+  }
 
   onSubmit(form: any): void {
-    const newBook: Book = {
-      id: Date.now(),
-      ...form.value
-    };
-    this.bookService.addBook(newBook);
-    this.toastr.success('Book added successfully!', 'Success');
-    console.log('Book added:', newBook);
+    if (form.valid) {
+      const newBook = { id: Date.now(), ...form.value };
+      this.bookService.addBook(newBook);
+      this.toastr.success('Book added successfully!', 'Success');
+      this.router.navigate(['/books']);
+    } else {
+      this.toastr.error('Please fill in all required fields.', 'Error');
+    }
+    }
+    }
 
-    this.router.navigate(['/books']);
-  }
-}
+
+

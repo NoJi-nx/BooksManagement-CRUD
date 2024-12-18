@@ -15,13 +15,18 @@ import { ToastrService } from 'ngx-toastr'
 })
 export class EditBookComponent implements OnInit {
   book: Book = { id: 0, title: '', author: '', publicationDate: ''};
+  maxDate: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private bookService: BookService,
     private toastr: ToastrService
-  )   {}
+  )
+  {
+    const today = new Date();
+    this.maxDate = today.toISOString().split('T')[0];
+  }
 
   ngOnInit(): void {
       const bookId = Number(this.route.snapshot.paramMap.get('id'));
@@ -34,10 +39,15 @@ export class EditBookComponent implements OnInit {
   }
 
   onSubmit(form: any): void{
-    const updatedBook = { id: this.book.id, ...form.value };
-  this.bookService.updateBook(updatedBook);
-  this.toastr.success('Book updated successfully!', 'Success'); 
-  this.router.navigate(['/books']);
-  }
-}
+    if (form.valid) {
+      const updatedBook: Book = { id: this.book.id, ...form.value };
+      this.bookService.updateBook(updatedBook);
+      this.toastr.success('Book updated successfully!', 'Success');
+      this.router.navigate(['/books']);
+    } else {
+      this.toastr.error('Please fill in all required fields.', 'Error');
+    }
+    }
+    }
+
 

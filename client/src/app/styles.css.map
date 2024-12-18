@@ -1,1 +1,1 @@
-{"version":3,"sources":["books-list/_books-list.component.scss","styles.css","_app.component.scss"],"names":[],"mappings":"AAAA;EACI,gBAAA;ACCJ;;ADEE;EACE,WAAA;EACA,gBAAA;ACCJ;;ADEE;EACE,mBAAA;ACCJ;;ACXA;EACI,4BAAA;ADcJ","file":"styles.css"}
+{"version":3,"sources":["books-list/_books-list.component.scss","styles.css","_app.component.scss"],"names":[],"mappings":"AAAA;EACI,gBAAA;ACCJ;;ADEE;EACE,WAAA;EACA,gBAAA;ACCJ;;ADEE;EACE,mBAAA;ACCJ;;ACXA;EACE,yBAAA;EACA,cAAA;ADcF;;ACXA;EACE,yBAAA;EACA,cAAA;ADcF;;ACXA;EACE,6CAAA;ADcF","file":"styles.css"}

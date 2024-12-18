@@ -1,21 +1,31 @@
 <div class="container mt-4">
     <h2>Add a New Book</h2>
 
-    <form #bookForm="ngForm" (ngSubmit)="onSubmit(bookForm)">
+    <form #bookForm="ngForm" (ngSubmit)="onSubmit(bookForm)" novalidate>
 
 <div class="mb-3">
     <label for="title" class="form-label">Title</label>
-    <input type="text" id="title" name="title" class="form-control" ngModel required />
+    <input type="text" id="title" name="title" class="form-control" ngModel required #title="ngModel" />
+    <div *ngIf="title.invalid && title.touched" class="text-danger">
+      Title is required.
+  </div>
 </div>
 
 <div class="mb-3">
     <label for="author" class="form-label">Author</label>
-    <input type="text" id="author" name="author" class="form-control" ngModel required />
-</div>
+    <input type="text" id="author" name="author" class="form-control" ngModel required #author="ngModel" />
+    <div *ngIf="author.invalid && author.touched" class="text-danger">
+      Author is required.
+  </div>
+  </div>
 
 <div class="mb-3">
     <label for="publicationDate" class="form-label">Publication Date</label>
-    <input type="date" id="publicationDate" name="publicationDate" class="form-control" ngModel required />
+    <input type="date" id="publicationDate" name="publicationDate" class="form-control" ngModel required  [max]="maxDate"
+    #publicationDate="ngModel" />
+    <div *ngIf="publicationDate.invalid && publicationDate.touched" class="text-danger">
+      Publication Date is required and must not be in the future.
+  </div>
   </div>
   <button type="submit" class="btn btn-success">Add Book</button>
 </form>
