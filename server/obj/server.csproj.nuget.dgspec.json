@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/icecold5/DocumentsMAC/VSCode/BooksManagement-CRUD/server/server.csproj": {}
+    "D:\\VSCode\\BooksManagement-CRUD\\server\\server.csproj": {}
   },
   "projects": {
-    "/Users/icecold5/DocumentsMAC/VSCode/BooksManagement-CRUD/server/server.csproj": {
+    "D:\\VSCode\\BooksManagement-CRUD\\server\\server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/icecold5/DocumentsMAC/VSCode/BooksManagement-CRUD/server/server.csproj",
+        "projectUniqueName": "D:\\VSCode\\BooksManagement-CRUD\\server\\server.csproj",
         "projectName": "server",
-        "projectPath": "/Users/icecold5/DocumentsMAC/VSCode/BooksManagement-CRUD/server/server.csproj",
-        "packagesPath": "/Users/icecold5/.nuget/packages/",
-        "outputPath": "/Users/icecold5/DocumentsMAC/VSCode/BooksManagement-CRUD/server/obj/",
+        "projectPath": "D:\\VSCode\\BooksManagement-CRUD\\server\\server.csproj",
+        "packagesPath": "C:\\Users\\nejir\\.nuget\\packages\\",
+        "outputPath": "D:\\VSCode\\BooksManagement-CRUD\\server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/icecold5/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\nejir\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -71,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
