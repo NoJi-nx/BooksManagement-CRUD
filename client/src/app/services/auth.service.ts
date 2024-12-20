@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:4000/api'; // Replace with your backend URL
+  private mockUsers = [
+    { username: 'testuser', password: 'testpassword', token: 'mock-jwt-token' },
+    { username: 'admin', password: 'admin123', token: 'admin-jwt-token' },
+  ];
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   login(username: string, password: string): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.baseUrl}/auth/login`, {
-      username,
-      password,
-    });
+    const user = this.mockUsers.find(
+      (u) => u.username === username && u.password === password
+    );
+
+    if (user) {
+      return of({ token: user.token });
+    } else {
+      return throwError(() => new Error('Invalid credentials'));
+    }
   }
 
   isLoggedIn(): boolean {
