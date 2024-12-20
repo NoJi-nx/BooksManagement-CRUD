@@ -4,18 +4,21 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Quote } from '../models/quote.model';
 import { DarklightThemeService } from '../darklight-theme.service';
-
+import { faPlus, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
   selector: 'app-my-quotes',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule,],
   templateUrl: './my-quotes.component.html',
   styleUrls: []
 })
 export class MyQuotesComponent implements OnInit {
-
+  faPlus = faPlus; // Add the icons to component properties
+  faTrash = faTrash;
+  faSearch = faSearch;
+  
   constructor(
     public themeService: DarklightThemeService
   ) {}
