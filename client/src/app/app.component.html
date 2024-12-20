@@ -6,6 +6,9 @@
           <li class="nav-item">
               <a class="nav-link" routerLink="/login">Login</a>
           </li>
+          <li *ngIf="authService.isLoggedIn()" class="nav-item">
+            <button class="btn btn-link nav-link" (click)="logout()">Logout</button>
+          </li>
       </ul>
   </div>
 </nav>

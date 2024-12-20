@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,21 @@ export class AuthService {
       return of({ token: user.token });
     } else {
       return throwError(() => new Error('Invalid credentials'));
+    }
+  }
+
+  register(username: string, password: string): Observable<{ success: boolean }> {
+    const userExists = this.mockUsers.some((u) => u.username === username);
+
+    if (userExists) {
+      return throwError(() => new Error('User already exists'));
+    } else {
+      this.mockUsers.push({
+        username,
+        password,
+        token: `${username}-mock-token`,
+      });
+      return of({ success: true });
     }
   }
 
