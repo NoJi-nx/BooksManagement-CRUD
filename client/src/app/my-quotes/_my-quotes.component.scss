@@ -1,0 +1,12 @@
+button {
+  transition: color 0.3s ease;
+}
+
+button .fa-heart {
+  color: red;
+}
+
+button .fa-heart:hover {
+  transform: scale(1.2);
+  color: darkred;
+}
