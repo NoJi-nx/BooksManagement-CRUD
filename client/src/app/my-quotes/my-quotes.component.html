@@ -1,5 +1,11 @@
 <div class="container mt-4">
+  <div class="text-end mb-3">
+    <button class="btn btn-outline-secondary" (click)="toggleTheme()">
+      Toggle {{ themeService.getTheme() ? 'Light' : 'Dark' }} Mode
+  </button>
+</div>
   <h2>My  Quotes</h2>
+
   <ul class="list-group">
     <li *ngFor="let quote of quotes" class="list-group-item">
       {{ quote }}

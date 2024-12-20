@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DarklightThemeService } from '../darklight-theme.service';
 
 @Component({
   selector: 'app-my-quotes',
@@ -10,6 +11,11 @@ import { RouterModule } from '@angular/router';
   styleUrls: []
 })
 export class MyQuotesComponent {
+
+  constructor(
+    public themeService: DarklightThemeService
+  ) {}
+
   allQuotes = [
     '“The only limit to our realization of tomorrow is our doubts of today.” – Franklin D. Roosevelt',
     '“In the middle of every difficulty lies opportunity.” – Albert Einstein',
@@ -35,9 +41,11 @@ export class MyQuotesComponent {
 
   randomizeQuotes(): void {
     const shuffled = this.allQuotes.sort(() => 0.5 - Math.random());
-    this.quotes = shuffled.slice(0, 5); 
+    this.quotes = shuffled.slice(0, 5);
   }
 
-
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
 
 }

@@ -5,6 +5,7 @@ import { BookService } from '../book.service';
 import { Book } from '../book.model';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr'
+import { DarklightThemeService } from '../darklight-theme.service';
 
 @Component({
   selector: 'app-books-list',
@@ -22,7 +23,8 @@ export class BooksListComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private toastr: ToastrService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    public themeService: DarklightThemeService
   ) {}
 
   ngOnInit(): void {
@@ -42,11 +44,9 @@ export class BooksListComponent implements OnInit {
       this.renderer.removeClass(document.body, 'dark-theme');
     }
   }
-  
+
   toggleTheme(): void {
-    this.isDarkMode = !this.isDarkMode;
-    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light'); // Save theme
-    this.applyTheme();
+    this.themeService.toggleTheme();
   }
 
   filterBooks(): void {
