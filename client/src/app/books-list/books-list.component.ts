@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BookService } from '../book.service';
-import { Book } from '../book.model';
+import { Book } from '../models/book.model';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr'
 import { DarklightThemeService } from '../darklight-theme.service';

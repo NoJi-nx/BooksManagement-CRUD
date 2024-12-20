@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Book } from './book.model';
+import { Book } from './models/book.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class BookService {
       { id: 3, title: '1984', author: 'George Orwell', publicationDate: '1949-06-08' }
     ];
   }
-  
+
   getBooks(): Book[] {
     return this.books;
   }

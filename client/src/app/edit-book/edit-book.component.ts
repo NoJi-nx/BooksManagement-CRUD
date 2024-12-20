@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, RouterModule} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../book.service';
-import { Book } from '../book.model';
+import { Book } from '../models/book.model';
 import { ToastrService } from 'ngx-toastr'
 
 @Component({

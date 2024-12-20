@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 
 import { BookService } from '../book.service';
-import { Book } from '../book.model';
+import { Book } from '../models/book.model';
 
 
 @Component({
