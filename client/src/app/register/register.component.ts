@@ -14,20 +14,17 @@ import { AuthService } from '../services/auth.service';
 export class RegisterComponent {
   username ='';
   password = '';
-  errorMessage = '';
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router)
   {}
 
   register(): void {
-    this.authService.register(this.username, this.password).subscribe(
-      () => {
-        alert('Registration successful! You can now log in');
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        this.errorMessage = error.message;
-      }
-    );
-  }
+    const registered = this.authService.register(this.username, this.password);
+    if (registered) {
+      this.router.navigate(['/login']);
+    } else {
+      this.errorMessage = 'Username already exists';
+    }
+}
 }

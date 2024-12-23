@@ -1,5 +1,9 @@
 <div class="container">
     <h2>Register</h2>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
     <form (ngSubmit)="register()">
       <div class="form-group">
         <label for="username">Username</label>

@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +13,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrls: []
 })
-export class AppComponent {
-
+export class AppComponent implements OnInit{
   title = 'client';
-  constructor(public authService: AuthService, private router: Router) {}
+
+  isLoggedIn: boolean = false;
+
+  constructor(private authService: AuthService)
+  {}
+
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
-}
+    this.isLoggedIn = false;
+  }
 }

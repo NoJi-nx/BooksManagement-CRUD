@@ -14,19 +14,16 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login(): void {
-    this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        localStorage.setItem('token', response.token); // Save the token
-        this.router.navigate(['/books']); // Redirect to books page
-      },
-      error: (err) => {
-        console.error('Login failed', err);
-        alert('Invalid credentials');
-      },
-    });
+    const success = this.authService.login(this.username, this.password);
+if (success) {
+  this.router.navigate(['/']);
+} else {
+  this.errorMessage = 'Invalid username or password';
+}
   }
 }

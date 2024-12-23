@@ -4,6 +4,9 @@
           <h4 class="mb-0">Login</h4>
       </div>
       <div class="card-body">
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
           <form (ngSubmit)="login()">
               <div class="mb-3">
                   <label for="username" class="form-label">Username</label>
