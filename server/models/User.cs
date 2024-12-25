@@ -10,6 +10,9 @@ public class User
     [BsonElement("Username")]
     public string Username { get; set; }
 
-    [BsonElement("Password")]
-    public string Password { get; set; }
+    [BsonElement("PasswordHash")]
+    public string PasswordHash { get; set; }
+
+    [BsonIgnore]
+    public string Password { get; set; } // Raw password, not stored in DB
 }

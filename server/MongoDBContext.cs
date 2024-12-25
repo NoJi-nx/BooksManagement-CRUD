@@ -21,6 +21,6 @@ public class MongoDbContext
     
 
     public IMongoCollection<Book> Books => _database.GetCollection<Book>("Books");
-public IMongoCollection<User> Users => GetCollection<User>("Users");
+public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
 public IMongoCollection<Quote> Quotes => GetCollection<Quote>("Quotes");
 }
