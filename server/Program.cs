@@ -27,44 +27,35 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<MongoDbContext>();
 
 builder.Services.AddAuthorization(); // Add this line for authorization
-builder.Services.AddAuthentication(options =>
+builder.Services.AddAuthorization(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = "https://book-management-crud.com",
-        ValidAudience = "https://book-management-crud.com",
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Convert.FromBase64String(Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ??
-                                     throw new Exception("JWT_SECRET_KEY not found or invalid."))
-        )
-    };
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireRole("admin")); // Ensure the user has the "admin" role
 });
+
+
+
+
 
 var app = builder.Build();
 
 // JWT Token Generator
 string GenerateJwtToken(string userId)
 {
+    Console.WriteLine($"Generating JWT for UserId: {userId}"); // Debug log
+
     var key = Convert.FromBase64String(Environment.GetEnvironmentVariable("JWT_SECRET_KEY") 
             ?? throw new Exception("JWT_SECRET_KEY not found or invalid."));
-Console.WriteLine("Decoded Key Length: " + key.Length * 8 + " bits");
-    
+
     var symmetricKey = new SymmetricSecurityKey(key);
     var credentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
 
     var claims = new[]
     {
-        new Claim(JwtRegisteredClaimNames.Sub, userId),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        new Claim(JwtRegisteredClaimNames.Sub, userId), // User ID
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.NameIdentifier, userId), // Add NameIdentifier for fallback
+        new Claim(ClaimTypes.Role, "admin") // Optional: Add role claim
     };
 
     var token = new JwtSecurityToken(
@@ -74,9 +65,9 @@ Console.WriteLine("Decoded Key Length: " + key.Length * 8 + " bits");
         expires: DateTime.UtcNow.AddHours(1),
         signingCredentials: credentials);
 
+    Console.WriteLine($"Generated Token Claims: {string.Join(", ", claims.Select(c => $"{c.Type}: {c.Value}"))}");
     return new JwtSecurityTokenHandler().WriteToken(token);
 }
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -88,6 +79,14 @@ if (app.Environment.IsDevelopment())
 
 
 app.MapGet("/", () => "Welcome to the Books Management API");
+
+app.MapGet("/api/books/test-userid", (ClaimsPrincipal user) =>
+{
+    var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+    return userId != null
+        ? Results.Ok(new { UserId = userId })
+        : Results.Unauthorized();
+});
 
 app.MapGet("/api/books", async (MongoDbContext db, ILogger<Program> logger) =>
 {
@@ -241,12 +240,12 @@ app.MapGet("/api/users", async (MongoDbContext dbContext) =>
 {
     var users = await dbContext.Users
         .Find(_ => true)
-        .Project(u => new { u.Id, u.Username }) // Exclude sensitive data
+        .Project(u => new { u.Id, u.Username, u.PasswordHash }) // Exclude sensitive data
         .ToListAsync();
     return Results.Ok(users);
 })
-.WithName("GetAllUsers")
-.RequireAuthorization(); // Add this if you want to restrict access to authenticated users
+.WithName("GetAllUsers"); 
+
 
 // Get user by ID
 app.MapGet("/api/users/{id}", async (string id, MongoDbContext dbContext) =>
@@ -260,8 +259,8 @@ app.MapGet("/api/users/{id}", async (string id, MongoDbContext dbContext) =>
 
     return Results.Ok(new { user.Id, user.Username }); // Exclude sensitive data
 })
-.WithName("GetUserById")
-.RequireAuthorization(); // Add this if needed
+.WithName("GetUserById");
+
 
 // Delete a user
 app.MapDelete("/api/users/{id}", async (string id, MongoDbContext dbContext) =>
@@ -275,8 +274,8 @@ app.MapDelete("/api/users/{id}", async (string id, MongoDbContext dbContext) =>
 
     return Results.Ok($"User with ID {id} deleted successfully.");
 })
-.WithName("DeleteUser")
-.RequireAuthorization(); // Add this if you want to restrict access to authenticated users
+.WithName("DeleteUser");
+
 
 // Update user details
 app.MapPut("/api/users/{id}", async (string id, User updatedUser, MongoDbContext dbContext) =>
@@ -296,8 +295,8 @@ app.MapPut("/api/users/{id}", async (string id, User updatedUser, MongoDbContext
 
     return Results.Ok("User updated successfully.");
 })
-.WithName("UpdateUser")
-.RequireAuthorization(); // Add this if needed
+.WithName("UpdateUser");
+
 
 app.MapGet("/weatherforecast", () =>
 {
